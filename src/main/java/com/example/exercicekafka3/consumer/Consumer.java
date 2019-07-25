@@ -11,33 +11,32 @@ import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.TopicPartition;
 import org.apache.kafka.common.serialization.StringDeserializer;
 
+import com.example.exercicekafka3.model.SimpleCard;
+
+import io.confluent.kafka.serializers.AbstractKafkaAvroSerDeConfig;
+
 
 
 
 public class Consumer {
-
-	TopicPartition topicPartition = new TopicPartition("my_topic", 0);
 
 	public void consumerSubscription() {
 		Properties props = new Properties();
 		props.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG, "localhost:9092");
 		props.put(ConsumerConfig.GROUP_ID_CONFIG, "groupIdExample");
 		props.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
-		props.put(ConsumerConfig.ISOLATION_LEVEL_CONFIG, "read_committed");
+		props.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, "io.confluent.kafka.serializers.KafkaAvroDeserializer");
+		props.put(AbstractKafkaAvroSerDeConfig.SCHEMA_REGISTRY_URL_CONFIG, "http://localhost:8081");
 		
-		try (KafkaConsumer<String, String> consumer = new KafkaConsumer<String, String>(props)) {
+		try (KafkaConsumer<String, SimpleCard> consumer = new KafkaConsumer<>(props)) {
 
-			consumer.subscribe(Arrays.asList("my_topic"));
+			consumer.subscribe(Arrays.asList("my_avro_topic"));
 
 			while (true) {
-				ConsumerRecords<String, String> records = consumer.poll(Duration.ofMillis(100));
-				for (ConsumerRecord<String, String> record : records) {
-					System.out.printf("offset = %d, key = %s, value = %s\n", record.offset(), record.key(),
-							record.value());
-					
-				consumer.seek(topicPartition, 5);
-					
+				ConsumerRecords<String, SimpleCard> records = consumer.poll(Duration.ofMillis(1000));
+				for (ConsumerRecord<String, SimpleCard> record : records) {
+					System.out.println("offset: " + record.offset() + ", record values:" + record.value());
+					consumer.seekToBeginning(consumer.assignment());					
 				}
 			}
 			

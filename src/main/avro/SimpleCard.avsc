@@ -1,0 +1,17 @@
+{
+	"namespace":"com.example.exercicekafka3.model",
+	"type": "record",
+	"name":"SimpleCard",
+	"fields":[
+		{
+			"name": "spades",
+			"type": "string",
+			"doc": "the spades"
+		},
+		{
+			"name":"ace",
+			"type": "string",
+			"doc": "the card number"
+		}
+			]
+}
