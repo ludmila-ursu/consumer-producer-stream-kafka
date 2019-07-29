@@ -1,0 +1,27 @@
+{
+	"namespace":"com.example.exercicekafka3.model",
+	"type": "record",
+	"name":"DataFile",
+	"fields":[
+		{"name": "serial_number","type": "string"},
+		{"name":"activity_date","type": "string"},
+		{"name":"facility_name","type": "string"},
+		{"name":"score","type": "string"},
+		{"name":"grade","type": "string"},
+		{"name":"service_code","type": "string"},
+		{"name":"service_description","type": "string"},
+		{"name":"employee_id","type": "string"},
+		{"name":"facility_address","type": "string"},
+		{"name":"facility_city","type": "string"},
+		{"name":"facility_id","type": "string"},
+		{"name":"facility_state","type": "string"},
+		{"name":"facility_zip","type": "string"},
+		{"name":"owner_id","type": "string"},	
+		{"name":"owner_name","type": "string"},
+		{"name":"pe_description","type": "string"},
+		{"name":"program_element_pe","type": "string"},
+		{"name":"program_name","type": "string"},
+		{"name":"program_status","type": "string"},
+		{"name":"record_id","type": "string"}	
+			]
+}
