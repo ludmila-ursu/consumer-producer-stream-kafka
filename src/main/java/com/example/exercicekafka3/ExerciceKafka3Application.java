@@ -17,7 +17,6 @@ public class ExerciceKafka3Application {
 
 		Consumer consumer = new Consumer();
 		consumer.consumerSubscription();
-		System.out.println("consumer end");
 		
 		Stream stream = new Stream();
 		stream.kafkaStream();
